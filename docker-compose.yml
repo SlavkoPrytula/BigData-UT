@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  spark:
+    image: bitnami/spark:latest
+    ports:
+      - "8080:8080"
+      - "4040:4040"
+    volumes:
+      - ./app:/app
+    networks:
+      - big_data_network
+
+  jupyter:
+    image: jupyter/pyspark-notebook:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./app:/home/jovyan/work
+      - ./data:/home/jovyan/work/data
+    networks:
+      - big_data_network
+
+networks:
+  big_data_network:
+    driver: bridge
